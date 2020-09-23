@@ -4,6 +4,15 @@ body {
     overflow: hidden;
 }
 
+#cat-nowtime {
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    color: #9FC865;
+    font-size: 14px;
+    z-index: 3;
+}
+
 #cat-main {
     box-shadow: 0 2px 3px rgba(26, 26, 26, .1);
     transition: all .5s;

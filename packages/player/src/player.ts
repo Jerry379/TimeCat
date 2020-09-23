@@ -1,6 +1,6 @@
 import { PointerComponent } from './pointer'
 import { updateDom } from './dom'
-import { getTime, isSnapshot, delay, toTimeStamp, base64ToFloat32Array, encodeWAV } from '@timecat/utils'
+import { getTime, isSnapshot, delay, toTimeStamp, base64ToFloat32Array, encodeWAV, getDateStr } from '@timecat/utils'
 import { ProgressComponent } from './progress'
 import { ContainerComponent } from './container'
 import { RecordData, AudioData, SnapshotRecord, ReplayPack, ReplayData, ReplayInternalOptions } from '@timecat/share'
@@ -359,6 +359,12 @@ export class PlayerComponent {
     }
 
     async execFrame(this: PlayerComponent, record: RecordData) {
+        const shadowRoot = document.querySelector('body')?.shadowRoot
+        if (shadowRoot) {
+            const nowtimeEl = shadowRoot.querySelector('#cat-nowtime') as HTMLElement
+            const startdate = getDateStr(Math.round(Number(record.time)))
+            nowtimeEl.innerText = startdate
+        }
         updateDom.call(this, record)
     }
 

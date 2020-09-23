@@ -34,6 +34,20 @@ export function getRadix64TimeStr() {
     return radix64.btoa(getTime())
 }
 
+export function getDateStr(timestamp: number): string {
+    const date = new Date(timestamp)
+    const y = date.getFullYear()
+    const m = date.getMonth() + 1
+    const d = date.getDate()
+    const h = date.getHours()
+    const strh = h < 10 ? '0' + h : h
+    const min = date.getMinutes()
+    const strmin = min < 10 ? '0' + min : min
+    const s = date.getSeconds()
+    const strs = s < 10 ? '0' + s : s
+    return y + '-' + m + '-' + d + ' ' + strh + ':' + strmin + ':' + strs
+}
+
 export function getRandomCode(len: 6 | 7 | 8 = 8) {
     const code = (Math.random() * 20 + 16).toString(36).substring(2, len + 2)
     return code.toUpperCase()
