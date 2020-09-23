@@ -11,7 +11,7 @@ import { nodeStore } from '../store/node'
 type ScriptItem = { name?: string; src: string }
 type ExportOptions = { scripts?: ScriptItem[]; autoplay?: boolean; audioExternal?: boolean; dataExternal?: boolean }
 
-const EXPORT_NAME_LABEL = 'TimeCat'
+const EXPORT_NAME_LABEL = 'newtouch'
 const downloadAudioConfig = {
     extractAudioDataList: [] as {
         source: string[]
