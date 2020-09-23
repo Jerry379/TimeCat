@@ -102,8 +102,6 @@ typings/
 # TernJS port file
 .tern-port
 
-dist
-lib
 docs
 .DS_Store
 stats.html
