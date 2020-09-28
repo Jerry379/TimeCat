@@ -375,9 +375,6 @@ export class PlayerComponent {
     }
 
     calcFrames(interval = this.frameInterval) {
-        if (this.options.mode === 'live') {
-            return []
-        }
         const progressState = reduxStore.getState('progress')
         const { startTime, endTime } = progressState
 

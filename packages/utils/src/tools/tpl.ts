@@ -6,7 +6,7 @@ export const TPL = `<!DOCTYPE html>
     <meta http-equiv="Content-Security-Policy-Report-Only" />
     <title>TimeCat</title>
 </head>
-<body style="margin: 0">
+<body>
 </body>
 </html>
 `

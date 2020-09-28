@@ -1,5 +1,6 @@
 import { getDBOperator, isSnapshot, classifyRecords, radix64, logError, nodeStore } from '@timecat/utils'
 import { ContainerComponent } from './container'
+import { Panel } from './panel'
 import pako from 'pako'
 import {
     SnapshotRecord,
@@ -93,7 +94,7 @@ export class Player {
         })
 
         if (!records.length) {
-            const panel = c.container.querySelector('#cat-panel')
+            const panel = document.querySelector('#cat-panel')
             if (panel) {
                 panel.setAttribute('style', 'display: none')
             }

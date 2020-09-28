@@ -7,7 +7,6 @@ import { base64ToFloat32Array, encodeWAV } from './transform'
 import { getScript } from './dom'
 import { recoverNative } from '../polyfill/recover-native'
 import { nodeStore } from '../store/node'
-import { radix64 } from '../performance/radix64'
 
 type ScriptItem = { name?: string; src: string }
 type ExportOptions = { scripts?: ScriptItem[]; autoplay?: boolean; audioExternal?: boolean; dataExternal?: boolean }
@@ -46,15 +45,13 @@ async function addNoneFrame() {
     const DBOperator = await getDBOperator
 
     const count = await DBOperator.count()
-    const last = await DBOperator.last()
 
-    if (count && last.type !== RecordType.TERMINATE) {
-        const lastTime = radix64.atob(last.time)
+    if (count) {
         DBOperator.add({
             type: RecordType.TERMINATE,
             data: null,
             relatedId: window.G_RECORD_RELATED_ID,
-            time: radix64.btoa(lastTime + 1)
+            time: getRadix64TimeStr()
         })
     }
 }
@@ -112,7 +109,7 @@ async function injectScripts(html: Document, scripts: ScriptItem[]) {
             if (name) {
                 script.id = name
             }
-            const isUrlReg = /^((chrome-extension|https?):)?\/\/.+/
+            const isUrlReg = /^(chrome-extension|https?):\/\/.+/
             // is a link or script text
             if (isUrlReg.test(src)) {
                 if (isDev) {

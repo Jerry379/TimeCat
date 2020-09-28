@@ -142,29 +142,27 @@ export class Recorder extends Pluginable {
         })
 
         this.watcherResolve()
-        await this.recordFrames(options.context)
+        await this.recordFrames()
     }
 
-    private async waitingFramesLoaded(context: Window) {
-        const frames = context.frames
+    private async waitingFramesLoaded() {
+        const frames = window.frames
         const validFrames = Array.from(frames)
             .filter(frame => {
                 try {
-                    return frame.frameElement.getAttribute('src')
+                    const frameElement = frame.frameElement
+                    return frameElement.getAttribute('src')
                 } catch (e) {
                     logError(e)
                     return false
                 }
             })
             .map(frame => {
+                const frameDocument = frame
                 return new Promise(resolve => {
-                    if (frame.document.readyState === 'complete') {
+                    frameDocument.addEventListener('load', () => {
                         resolve(frame)
-                    } else {
-                        frame.addEventListener('load', () => {
-                            resolve(frame)
-                        })
-                    }
+                    })
                 })
             })
         if (!validFrames.length) {
@@ -173,8 +171,8 @@ export class Recorder extends Pluginable {
         return Promise.all(validFrames) as Promise<Window[]>
     }
 
-    private async recordFrames(context: Window) {
-        const frames = await this.waitingFramesLoaded(context)
+    private async recordFrames() {
+        const frames = await this.waitingFramesLoaded()
         frames.forEach(frameWindow => this.record({ context: frameWindow }))
     }
 
